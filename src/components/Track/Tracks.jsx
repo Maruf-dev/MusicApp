@@ -4,16 +4,19 @@ import style from "./track.module.scss"
 import { IconButton } from "@mui/material"
 import { PlayArrow } from "@mui/icons-material"
 import secondsToMMSS from   "../../utils/secondsToMMSS"
+import cn from "classnames";
 
 const Tracks = (track) => {
     const {id, src, preview, title, artists, duration,} = track
     
-    const {handleToggleAudio, isPlaying} = useContext(AudioContext)
+    const {handleToggleAudio, currentTrack} = useContext(AudioContext)
+
+    const isCurrentTrack = currentTrack.id === track.id;
 
     const formattedDuration = secondsToMMSS(duration);
-    console.log(isPlaying)
+
     return (
-        <div className={style.track}>
+        <div className={cn(style.track, isCurrentTrack && style.playing)}>
             <IconButton onClick={() => handleToggleAudio(track)}>
                 <PlayArrow />
             </IconButton>
