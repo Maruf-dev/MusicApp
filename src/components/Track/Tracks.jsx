@@ -1,14 +1,20 @@
+import { useContext } from "react"
+import { AudioContext } from "../../context/AuidoContext"
 import style from "./track.module.scss"
 import { IconButton } from "@mui/material"
 import { PlayArrow } from "@mui/icons-material"
-
+import secondsToMMSS from   "../../utils/secondsToMMSS"
 
 const Tracks = (track) => {
     const {id, src, preview, title, artists, duration,} = track
+    
+    const {handleToggleAudio, isPlaying} = useContext(AudioContext)
 
+    const formattedDuration = secondsToMMSS(duration);
+    console.log(isPlaying)
     return (
         <div className={style.track}>
-            <IconButton>
+            <IconButton onClick={() => handleToggleAudio(track)}>
                 <PlayArrow />
             </IconButton>
             <img className={style.preview} src={preview} alt="" />
@@ -16,7 +22,7 @@ const Tracks = (track) => {
                 <b>{title}</b>
                 <p>{artists}</p>
             </div>
-            <p>{duration}</p>
+            <p>{formattedDuration}</p>
         </div>
     )
 }
